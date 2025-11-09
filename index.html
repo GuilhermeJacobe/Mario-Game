@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+ 
+   
+    
+    <title>Mario Game</title>
+</head>
+<body>
+    <div class="game-board">
+        <img src="./img/Game-ov.png" class="gameover">
+        <img src="./img/clouds.png" class="clouds">
+        <img src="./img/pipe.png" class="pipe">
+        <img src="./img/mario.gif" class="mario">
+        <p class="points"></p>
+
+
+    </div>
+
+    <script>
+        const mario = document.querySelector('.mario');
+        const pipe = document.querySelector('.pipe');
+        const gameover=document.querySelector('.gameover')
+        const pointsScore=document.querySelector('.points')
+        var points=0
+
+      
+
+
+
+        const jump = () => {
+            mario.classList.add('jump');
+
+            setTimeout(() => {
+                mario.classList.remove('jump');
+            }, 500);
+        }
+
+        const loop = setInterval(()=> {
+
+           const pipePosition = pipe.offsetLeft;
+           const marioPosition=+window.getComputedStyle(mario).bottom.replace('px','')
+           points++    
+           pointsScore.textContent=`Points : ${points}`
+           console.log(points)
+    
+           
+           
+           if (pipePosition<=120 && pipePosition > 0 && marioPosition<80) {
+    
+      pipe.style.animation='none'
+      pipe.style.left=`${pipePosition}px`
+
+      mario.style.animation='none'
+      mario.style.bottom=`${marioPosition}`
+
+      mario.src='./img/game-over.png'
+      mario.style.width='75px'
+      mario.style.marginLeft='50px'
+
+      gameover.style.animation='gameover-animation .2s linear forwards'
+
+      
+      clearInterval(loop)
+
+           }
+
+        }, 10);
+        document.addEventListener('keydown', jump);
+    </script>
+</body>
+
+</html>
